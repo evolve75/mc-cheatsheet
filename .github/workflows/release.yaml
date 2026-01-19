@@ -1,0 +1,37 @@
+---
+name: Release (attach PDFs)
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Build PDFs (TeX Live container)
+        uses: xu-cheng/texlive-action/full@v1
+        with:
+          run: |
+            make distclean
+            make booklet
+
+      - name: Create GitHub Release and upload PDFs
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            mc-cheatsheet.pdf
+            mc-cheatsheet-booklet.pdf
+          generate_release_notes: true
+
+...

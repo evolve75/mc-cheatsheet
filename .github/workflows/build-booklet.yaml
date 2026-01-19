@@ -45,17 +45,4 @@ jobs:
           path: |
             mc-cheatsheet.pdf
             mc-cheatsheet-booklet.pdf
-
-      - name: Commit generated PDFs back to repo
-        if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
-        run: |
-          git add mc-cheatsheet.pdf mc-cheatsheet-booklet.pdf
-          if git diff --cached --quiet; then
-            echo "No PDF changes to commit."
-            exit 0
-          fi
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git commit -m "CI: update generated PDFs [skip ci]"
-          git push
 ...

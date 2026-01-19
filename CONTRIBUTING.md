@@ -79,6 +79,8 @@ sudo dnf install latexmk texlive-scheme-basic texlive-xetex texlive-collection-l
 sudo pacman -S texlive-bin texlive-core texlive-latexextra chktex
 ```
 
+---
+
 ## Printing checklist
 
 - Build: `make booklet`
@@ -93,3 +95,32 @@ sudo pacman -S texlive-bin texlive-core texlive-latexextra chktex
 
 CI runs on GitHub Actions in a TeX Live container and can commit regenerated PDFs back to `main`.
 If you change `mc-cheatsheet.tex` or the `Makefile`, ensure `make booklet` succeeds locally.
+
+---
+
+## Creating a new release (maintainers)
+
+To publish a new release with attached PDFs:
+
+```sh
+git tag -a v1.0.0 -m "mc cheatsheet v1.0.0"
+git push origin v1.0.0
+```
+
+Pushing a tag matching `v*` triggers CI to:
+
+1. Build the PDFs in a controlled TeX Live environment.
+2. Create a GitHub Release.
+3. Attach the generated PDFs to the release.
+
+---
+
+## Optional: Website or Pages downloads
+
+If this project is later published via GitHub Pages or another website:
+
+- **Release assets** should be linked as the canonical downloads.
+- CI artifacts should be treated as preview builds only.
+- The repository itself should remain source-only.
+
+This keeps the repo clean while still making printable outputs easy to find.

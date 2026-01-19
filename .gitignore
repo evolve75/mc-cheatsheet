@@ -1,3 +1,13 @@
+# Build outputs (generated)
+mc-cheatsheet.pdf
+mc-cheatsheet-booklet.pdf
+mc-cheatsheet-book.pdf
+mc-cheatsheet-crop.pdf
+aux/
+*.synctex.gz
+*.fls
+*.fdb_latexmk
+
 # --- LaTeX / TeX ---
 *.aux
 *.bbl
