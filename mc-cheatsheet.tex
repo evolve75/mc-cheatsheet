@@ -13,6 +13,32 @@
 %   - Gist cheat sheet: https://gist.github.com/samiraguiar/9cd4264445545cfd459d
 %   - Project site: https://midnight-commander.org/
 %
+% ----------------------------------------------------------------------
+% PRINT CHECKLIST (TL;DR)
+%
+% 1. Build:
+%      latexmk -pdf -xelatex mc-cheatsheet.tex
+%
+% 2. Impose booklet (DO NOT skip this step):
+%      pdfbook2 --paper=letterpaper --short-edge mc-cheatsheet.pdf
+%      mv mc-cheatsheet-book.pdf mc-cheatsheet-booklet.pdf
+%
+% 3. Print:
+%    - File:        mc-cheatsheet-booklet.pdf
+%    - Paper:       US Letter
+%    - Duplex:      ON
+%    - Binding:     Short-edge
+%    - Scaling:     100% (no scaling)
+%    - Orientation: Auto
+%    - Printer-side booklet mode: OFF
+%
+% 4. After printing:
+%    - Fold at center
+%    - Verify page order (1→2→3→4)
+%    - Trim edges if desired
+%    - Laminate (recommended)
+%    ----------------------------------------------------------------------
+%
 % vim: set ft=tex :
 
 \documentclass[9pt,letterpaper,twoside]{article}
