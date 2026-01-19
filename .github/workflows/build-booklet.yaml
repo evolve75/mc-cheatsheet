@@ -1,0 +1,75 @@
+---
+name: Build booklet PDFs
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "mc-cheatsheet.tex"
+      - "Makefile"
+      - ".latexmkrc"
+      - ".github/workflows/**"
+  pull_request:
+    paths:
+      - "mc-cheatsheet.tex"
+      - "Makefile"
+      - ".latexmkrc"
+      - ".github/workflows/**"
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    # Prevent infinite loops when we push generated PDFs back
+    if: ${{ !contains(github.event.head_commit.message, '[skip ci]') }}
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install TeX + pdfbook2 deps
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends \
+            make \
+            latexmk \
+            texlive-xetex \
+            texlive-latex-extra \
+            texlive-fonts-recommended \
+            texlive-fonts-extra \
+            pdfjam \
+            ghostscript
+
+      - name: Build via Makefile
+        run: |
+          make distclean
+          make booklet
+
+      - name: Upload PDFs (artifacts)
+        uses: actions/upload-artifact@v4
+        with:
+          name: mc-cheatsheet-pdfs
+          path: |
+            mc-cheatsheet.pdf
+            mc-cheatsheet-booklet.pdf
+
+      - name: Commit generated PDFs back to repo
+        if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
+        run: |
+          git add mc-cheatsheet.pdf mc-cheatsheet-booklet.pdf
+
+          if git diff --cached --quiet; then
+            echo "No PDF changes to commit."
+            exit 0
+          fi
+
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git commit -m "CI: update generated PDFs [skip ci]"
+          git push
+
+...
