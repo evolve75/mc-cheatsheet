@@ -46,6 +46,12 @@
 \usepackage{array}
 \usepackage{xcolor}
 
+% ---------- Color palette (enhanced contrast, still print-safe) ----------
+\definecolor{MCBlue}{HTML}{0B3C5D}   % deeper navy-blue (headings, rules)
+\definecolor{MCGray}{HTML}{555555}   % darker gray (headers/footers)
+\definecolor{MCKey}{HTML}{002A4E}    % strong blue for keybindings
+\definecolor{MCCode}{HTML}{1A1A1A}   % near-black for code
+
 % ---------- Lists ----------
 \usepackage{enumitem}
 \setlist[itemize]{leftmargin=*, itemsep=0.12em, topsep=0.12em}
@@ -56,8 +62,8 @@
 \usepackage{xurl}
 \hypersetup{
   colorlinks=true,
-  linkcolor=blue,
-  urlcolor=blue,
+  linkcolor=MCBlue,
+  urlcolor=MCBlue,
   pdftitle={Midnight Commander (mc) Cheatsheet},
   pdfsubject={Key bindings and quick reference},
   pdfkeywords={midnight commander, mc, file manager, cheatsheet}
@@ -70,11 +76,10 @@
 \renewcommand{\headrulewidth}{0.3pt}
 \renewcommand{\footrulewidth}{0.3pt}
 % Two-sided: keep the title on the outer edge, label on the inner edge.
-\fancyhead[LE,RO]{\textsf{Midnight Commander (mc)}}
-\fancyhead[LO,RE]{\textsf{Cheatsheet}}
-% Footer: page number on the outer edge (two-sided)
-\fancyfoot[LE,RO]{\textsf{Page \thepage\ of 4}}
-\fancyfoot[LO,RE]{\textsf{mc}}
+\fancyhead[LE,RO]{\textsf{\color{MCGray}Midnight Commander (mc)}}
+\fancyhead[LO,RE]{\textsf{\color{MCGray}Cheatsheet}}
+% Footer: apply the same two-sided logic (page number on the outer edge).
+\fancyfoot[LE,RO]{\textsf{\color{MCGray}Page \thepage\ of 4}}
 
 % ---------- House style ----------
 \setlength{\parindent}{0pt}
@@ -84,10 +89,14 @@
 
 % ---------- Macros ----------
 \newcommand{\app}{\textsf{Midnight Commander}}
-\newcommand{\key}[1]{\texttt{#1}}
-\newcommand{\ks}[1]{\textbf{\texttt{#1}}}
-\newcommand{\sect}[1]{\textsf{\textbf{#1}}}
-\newcommand{\sectionrule}{\vspace{0.14em}\hrule\vspace{0.30em}}
+\newcommand{\key}[1]{\texttt{\color{MCCode}#1}}
+\newcommand{\ks}[1]{\textbf{\texttt{\color{MCKey}#1}}}
+\newcommand{\sect}[1]{\textsf{\color{MCBlue}\textbf{#1}}}
+\newcommand{\sectionrule}{%
+  \vspace{0.14em}%
+  {\color{MCBlue}\hrule}%
+  \vspace{0.30em}%
+}
 \newcommand{\tinyurl}[1]{\texttt{\small\url{#1}}}
 \newcommand{\pathtt}[1]{\texttt{\path{#1}}}
 
@@ -98,9 +107,9 @@
 
 % Wrap-friendly code for long protocol-ish strings
 % Commands/snippets: preserve literal spaces
-\newcommand{\codewrap}[1]{{\ttfamily\small #1}\space}
+\newcommand{\codewrap}[1]{{\ttfamily\small\color{MCCode}#1}\space}
 % Path/protocol strings: allow breaks at / : . _ - etc., and preserve trailing space
-\newcommand{\codepath}[1]{{\ttfamily\small\path{#1}}\space}
+\newcommand{\codepath}[1]{{\ttfamily\small\color{MCCode}\path{#1}}\space}
 
 % ---------- Key table environment ----------
 \newcommand{\keycolw}{0.24\linewidth}
@@ -111,7 +120,7 @@
   \vspace{0.22em}%
   \begin{tabular}{@{} >{\raggedright\arraybackslash}p{\keycolw} >{\raggedright\arraybackslash}p{\actcolw} @{}}
   \toprule
-  \textsf{Key} & \textsf{Action}\\
+  \textsf{\color{MCGray}Key} & \textsf{\color{MCGray}Action}\\
   \midrule
 }
 {%
@@ -274,7 +283,7 @@ as if they were local directories.}\par
 \ks{C-x s} & Create symlink dialog.\\
 \ks{C-x l} & Create hard link dialog.\\
 \ks{C-x v} & Relative symlink tool on selected or tagged.\\
-\ks{C-x a} & List active VFS directories.\\
+\ks{C-x a} & List active VFS directories — gist.\\
 \end{keytable}
 
 \sect{Command prompt — gist}\par
