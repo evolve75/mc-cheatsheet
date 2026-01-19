@@ -239,13 +239,13 @@ accuracy and completeness as best as possible, but errors might exist.
 
 ## Contributing
 
-See <CONTRIBUTING.md> for details.
+See [](./CONTRIBUTING.md) for details.
 
 ----
 
 ## License
 
-See <LICENSE> for details.
+See [](./LICENSE) for details.
 
 This cheatsheet is provided for **personal and educational use**.
 Refer to upstream sources for licensing of original content.
