@@ -21,35 +21,29 @@ permissions:
 
 jobs:
   build:
-    # Prevent infinite loops when we push generated PDFs back
     if: ${{ !contains(github.event.head_commit.message, '[skip ci]') }}
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      - name: Install TeX + pdfbook2 deps
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y --no-install-recommends \
-            make \
-            latexmk \
-            texlive-xetex \
-            texlive-latex-extra \
-            texlive-extra-utils \
-            texlive-fonts-recommended \
-            texlive-fonts-extra \
-            ghostscript
+      # TeX Live via container (fast) + latexmk (XeLaTeX)
+      - name: Build PDF (XeLaTeX) with latex-action
+        uses: xu-cheng/latex-action@v3
+        with:
+          root_file: mc-cheatsheet.tex
+          latexmk_use_xelatex: true
+          args: -interaction=nonstopmode -file-line-error
 
-      - name: Build via Makefile
+      # pdfbook2 comes from TeX Live extras inside the container on most images;
+      # if it isn't present, this step will tell you immediately.
+      - name: Build booklet via Makefile
         run: |
-          make distclean
           make booklet
 
-      - name: Upload PDFs (artifacts)
+      - name: Upload PDFs
         uses: actions/upload-artifact@v4
         with:
           name: mc-cheatsheet-pdfs
@@ -61,15 +55,12 @@ jobs:
         if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
         run: |
           git add mc-cheatsheet.pdf mc-cheatsheet-booklet.pdf
-
           if git diff --cached --quiet; then
             echo "No PDF changes to commit."
             exit 0
           fi
-
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git commit -m "CI: update generated PDFs [skip ci]"
           git push
-
 ...
