@@ -15,12 +15,15 @@
 %
 % vim: set ft=tex :
 
-\documentclass[9pt,letterpaper]{article}
+\documentclass[9pt,letterpaper,twoside]{article}
 
-% ---------- Page geometry (lamination-safe) ----------
+% ---------- Page geometry (lamination-safe, booklet gutter-aware) ----------
+% For a folded duplex booklet (imposed externally via pdfbook2), reserve a bit
+% more whitespace on the *inner* edge of each logical page for the fold/gutter.
 \usepackage[
-  left=0.50in,
-  right=0.50in,
+  inner=0.65in,
+  outer=0.45in,
+  bindingoffset=0.10in,
   top=0.75in,
   bottom=0.75in
 ]{geometry}
@@ -34,7 +37,8 @@
 
 % ---------- Layout ----------
 \usepackage{multicol}
-\setlength{\columnsep}{0.22in}
+\setlength{\columnsep}{0.24in}
+% Slightly more breathing room between the two columns.
 \raggedcolumns{}
 
 % ---------- Tables ----------
@@ -65,9 +69,12 @@
 \fancyhf{}
 \renewcommand{\headrulewidth}{0.3pt}
 \renewcommand{\footrulewidth}{0.3pt}
-\fancyhead[L]{\textsf{Midnight Commander (mc)}}
-\fancyhead[R]{\textsf{Cheatsheet}}
-\fancyfoot[R]{\textsf{Page \thepage\ of 4}}
+% Two-sided: keep the title on the outer edge, label on the inner edge.
+\fancyhead[LE,RO]{\textsf{Midnight Commander (mc)}}
+\fancyhead[LO,RE]{\textsf{Cheatsheet}}
+% Footer: page number on the outer edge (two-sided)
+\fancyfoot[LE,RO]{\textsf{Page \thepage\ of 4}}
+\fancyfoot[LO,RE]{\textsf{mc}}
 
 % ---------- House style ----------
 \setlength{\parindent}{0pt}
@@ -140,7 +147,7 @@ as if they were local directories.}\par
 \begin{itemize}
   \item \ks{C-x} = Ctrl+\key{x}. \quad \ks{A-x} = Alt+\key{x}.
   \item No Alt/Meta? Press \ks{Esc}, release, then type the character.
-  \item Many terminals map \ks{Esc}+\key{1\ldots{}9,0} \(\rightarrow{}\) \ks{F1\ldots{}F10}.
+  \item Many terminals map \ks{Esc}+\key{1\ldots{}9,0} $begin:math:text$\\rightarrow\{\}$end:math:text$ \ks{F1\ldots{}F10}.
   \item \ks{Esc Esc} quickly dismisses menus and popups — gist.
 \end{itemize}
 
@@ -248,7 +255,7 @@ as if they were local directories.}\par
 \ks{(menu)} & Rescan/reread directory; Panelize (fill from command output).\\
 \end{keytable}
 
-\columnbreak{}
+% (balanced automatically by multicols)
 
 \sect{Menus at a glance — F9}\par
 \begin{keytable}
@@ -338,7 +345,7 @@ as if they were local directories.}\par
 \ks{C-x j} & Jobs list; inspect or cancel background operations.\\
 \end{keytable}
 
-\columnbreak{}
+% (balanced automatically by multicols)
 
 \sect{User menu “@” commands — gist}\par
 \begin{keytable}
@@ -409,7 +416,7 @@ as if they were local directories.}\par
 \ks{undel://} & \codewrap{undel://DEVICEPART} (for example, \codewrap{undel://sda2}) if built with support.\\
 \end{keytable}
 
-\columnbreak{}
+% (balanced automatically by multicols)
 
 \sect{Configuration paths — \manref{mc}{1}}\par{}
 \begin{keytable}
@@ -430,7 +437,7 @@ as if they were local directories.}\par
 
 \sect{Troubleshooting quick hits}\par
 \begin{keytable}
-\ks{F10 stolen} & Quit via menu (\ks{F9} $begin:math:text$\\rightarrow$end:math:text$ Quit) or remap the terminal key.\\
+\ks{F10 stolen} & Quit via menu (\ks{F9} $begin:math:text$\\rightarrow\{\}$end:math:text$ Quit) or remap the terminal key.\\
 \ks{Alt combos} & Use \ks{Esc} then key (Meta emulation).\\
 \ks{tmux/screen} & Try \ks{mc -g}; then re-run Learn keys.\\
 \ks{Display odd} & Try \ks{mc -a} (ASCII) or adjust terminal settings.\\
