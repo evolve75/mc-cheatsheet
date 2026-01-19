@@ -25,25 +25,20 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      # TeX Live via container (fast) + latexmk (XeLaTeX)
-      - name: Build PDF (XeLaTeX) with latex-action
-        uses: xu-cheng/latex-action@v3
+      # Run arbitrary commands in a full TeX Live environment (best for Makefiles)
+      - name: Build PDFs via Makefile (inside TeX Live)
+        uses: xu-cheng/texlive-action/full@v1
         with:
-          root_file: mc-cheatsheet.tex
-          latexmk_use_xelatex: true
-          args: -interaction=nonstopmode -file-line-error
+          run: |
+            make distclean
+            make booklet
 
-      # pdfbook2 comes from TeX Live extras inside the container on most images;
-      # if it isn't present, this step will tell you immediately.
-      - name: Build booklet via Makefile
-        run: |
-          make booklet
-
-      - name: Upload PDFs
+      - name: Upload PDFs (artifacts)
         uses: actions/upload-artifact@v4
         with:
           name: mc-cheatsheet-pdfs
