@@ -1,0 +1,41 @@
+# --- LaTeX / TeX ---
+*.aux
+*.bbl
+*.blg
+*.brf
+*.fdb_latexmk
+*.fls
+*.idx
+*.ilg
+*.ind
+*.lof
+*.lot
+*.out
+*.synctex.gz
+*.toc
+*.nav
+*.snm
+*.vrb
+*.xdv
+
+# latexmk temporary files
+*.latexmk
+*.log
+
+# Backup files
+*~
+*.bak
+*.backup
+
+# OS / editor noise
+.DS_Store
+.AppleDouble
+.LSOverride
+.idea/
+.vscode/
+
+# Emacs / auctex files
+auto/
+
+# Uncomment if you do not want PDFs tracked
+# *.pdf
