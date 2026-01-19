@@ -11,16 +11,16 @@ BOOK := $(NAME)-booklet.pdf
 all: $(BOOK)
 
 # Build the PDF only when inputs change (XeLaTeX via latexmk)
-$(PDF): $(TEX) $(wildcard .latexmkrc)
+$(PDF): $(TEX) $(wildcard .latexmkrc) Makefile
 	latexmk -pdf -xelatex $(TEX)
 
 # Convenience alias
 pdf: $(PDF)
 
 # Build booklet only when the PDF changes
-$(BOOK): $(PDF)
+$(BOOK): $(PDF) Makefile
 	# 2-up imposed booklet for US Letter, short-edge duplex folding
-	pdfbook2 --paper=letterpaper --short-edge $(PDF)
+	pdfbook2 --paper=letterpaper $(PDF)
 	# pdfbook2 outputs "$(NAME)-book.pdf" by default; normalize the name:
 	@if [ -f "$(NAME)-book.pdf" ]; then mv "$(NAME)-book.pdf" "$(BOOK)"; fi
 
