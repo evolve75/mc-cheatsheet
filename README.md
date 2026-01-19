@@ -187,6 +187,12 @@ accuracy and completeness as best as possible, but errors might exist.
 
 ---
 
+## Contributing
+
+See [./CONTRIBUTING.md][] for details.
+
+----
+
 ## License
 
 This cheatsheet is provided for **personal and educational use**.
