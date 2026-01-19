@@ -23,7 +23,7 @@
   right=0.50in,
   top=0.75in,
   bottom=0.75in
-  ]{geometry}
+]{geometry}
 
 % ---------- Fonts ----------
 \usepackage{fontspec}
@@ -35,7 +35,7 @@
 % ---------- Layout ----------
 \usepackage{multicol}
 \setlength{\columnsep}{0.22in}
-\raggedcolumns
+\raggedcolumns{}
 
 % ---------- Tables ----------
 \usepackage{booktabs}
@@ -89,12 +89,13 @@
 \newcommand{\lbracechar}{\char`\{}
 \newcommand{\rbracechar}{\char`\}}
 
-% Wrap-friendly code for long protocol-ish strings in tables
-% \path provides good breakpoints at / : . _ - etc.
-\newcommand{\codewrap}[1]{{\ttfamily\small\path{#1}}}
+% Wrap-friendly code for long protocol-ish strings
+% Commands/snippets: preserve literal spaces
+\newcommand{\codewrap}[1]{{\ttfamily\small #1}\space}
+% Path/protocol strings: allow breaks at / : . _ - etc., and preserve trailing space
+\newcommand{\codepath}[1]{{\ttfamily\small\path{#1}}\space}
 
-% ---------- Key table environment (NO tabularx) ----------
-% Slightly narrower key column prevents visual overflow in long-action rows.
+% ---------- Key table environment ----------
 \newcommand{\keycolw}{0.24\linewidth}
 \newcommand{\actcolw}{0.72\linewidth}
 \newcommand{\aftertable}{\vspace{0.48em}}
@@ -109,24 +110,24 @@
 {%
   \bottomrule
   \end{tabular}
-  \aftertable
+  \aftertable{}
 }
 
 \begin{document}
 
 % ===================== PAGE 1 =====================
-{\Large\textsf{\textbf{\app\ (mc) — one-stop cheatsheet}}}\par
+{\Large\textsf{\textbf{\app{} (mc) — one-stop cheatsheet}}}\par
 \small
 
-{\raggedright
+{\raggedright{}
 \textsf{Midnight Commander is an orthodox (two-pane) terminal file manager—think “visual shell”:
 navigate directories, tag groups of files, and perform copy/move/rename/delete at speed, while
 also having built-in viewer/editor, a configurable user menu, background jobs, and a Virtual File
-System (VFS) that lets you browse archives and remote hosts (e.g., \key{sftp://}, \key{sh://})
+System (VFS) that lets you browse archives and remote hosts (for example, \key{sftp://} and \key{sh://})
 as if they were local directories.}\par
 }
 
-\sectionrule
+\sectionrule{}
 
 \begin{multicols}{2}
 
@@ -135,7 +136,7 @@ as if they were local directories.}\par
   \item \ks{C-x} = Ctrl+\key{x}. \quad \ks{A-x} = Alt+\key{x}.
   \item No Alt/Meta? Press \ks{Esc}, release, then type the character.
   \item Many terminals map \ks{Esc}+\key{1..9,0} $begin:math:text$\\rightarrow$end:math:text$ \ks{F1..F10}.
-  \item \ks{Esc Esc} quickly dismisses menus/popups (gist).
+  \item \ks{Esc Esc} quickly dismisses menus and popups — gist.
 \end{itemize}
 
 \sect{Core model}\par
@@ -145,7 +146,7 @@ as if they were local directories.}\par
   \item \textbf{Tagged files}: if any are tagged, most operations apply to the tagged set.
 \end{itemize}
 
-\sect{Launch \& CLI options (mc(1))}\par
+\sect{Launch \& CLI options — \mbox{mc\(1\)}}\par
 \begin{itemize}
   \item Start: \ks{mc} \; or \ks{mc dir1 [dir2]} (set panel dirs).
   \item Viewer: \ks{mc -v FILE} \quad Editor: \ks{mc -e [FILE]}.
@@ -157,29 +158,29 @@ as if they were local directories.}\par
   \item Info: \ks{mc -V} (version) \; \ks{mc -h} (help).
 \end{itemize}
 
-\sect{Core function keys (File menu)}\par
+\sect{Core function keys — File menu}\par
 \begin{keytable}
 \ks{F1} & Help (contextual).\\
-\ks{F2} & User menu (custom actions/macros).\\
+\ks{F2} & User menu (custom actions and macros).\\
 \ks{F3} & View file (\ks{Shift-F3} raw view; disregard extension).\\
 \ks{F4} & Edit file (\ks{Shift-F4} create new file).\\
-\ks{F5} & Copy selected/tagged to other panel dir.\\
-\ks{F6} & Move selected/tagged (\ks{Shift-F6} rename under cursor).\\
+\ks{F5} & Copy selected or tagged to other panel directory.\\
+\ks{F6} & Move selected or tagged (\ks{Shift-F6} rename under cursor).\\
 \ks{F7} & Mkdir.\\
 \ks{F8} & Delete.\\
 \ks{F9} & Focus top menu bar.\\
 \ks{F10} & Quit.\\
 \end{keytable}
 
-\sect{Selection (gist)}\par
+\sect{Selection — gist}\par
 \begin{keytable}
-\ks{Insert}/\ks{C-t} & Select/deselect file.\\
+\ks{Insert}/\ks{C-t} & Select or deselect file.\\
 \ks{*} & Invert selection on files.\\
-\ks{+} & Selection options (incl.\ custom pattern).\\
+\ks{+} & Selection options (including custom pattern).\\
 \ks{-} & Deselect options (pattern).\\
 \end{keytable}
 
-\sect{Quick navigation (gist)}\par
+\sect{Quick navigation — gist}\par
 \begin{keytable}
 \ks{Tab}/\ks{C-i} & Jump to other panel.\\
 \ks{A-c} & Quick cd dialog.\\
@@ -196,11 +197,11 @@ as if they were local directories.}\par
 % ===================== PAGE 2 =====================
 {\Large\textsf{\textbf{Navigation, display, panels menu, and command prompt}}}\par
 \small
-\sectionrule
+\sectionrule{}
 
 \begin{multicols}{2}
 
-\sect{Navigation keys (gist)}\par
+\sect{Navigation keys — gist}\par
 \begin{keytable}
 \ks{C-p}/\ks{Up} & Move selection to previous entry.\\
 \ks{C-n}/\ks{Down} & Move selection to next entry.\\
@@ -213,14 +214,14 @@ as if they were local directories.}\par
 \ks{A->}/\ks{End} & Bottom (last entry).\\
 \end{keytable}
 
-\sect{Directory history (gist)}\par
+\sect{Directory history — gist}\par
 \begin{keytable}
 \ks{A-y} & Previous directory in directory history.\\
 \ks{A-u} & Next directory in directory history.\\
 \ks{A-Shift-h} & Show path history.\\
 \end{keytable}
 
-\sect{Display (gist)}\par
+\sect{Display — gist}\par
 \begin{keytable}
 \ks{C-r} & Refresh current panel.\\
 \ks{C-u} & Swap panels.\\
@@ -228,12 +229,12 @@ as if they were local directories.}\par
 \ks{C-x i} & Toggle other panel to information mode.\\
 \ks{C-x q} & Toggle other panel to quick view mode.\\
 \ks{A-i} & Other panel shows same directory as current.\\
-\ks{A-o} & Show highlighted dir in the other panel.\\
+\ks{A-o} & Show highlighted directory in the other panel.\\
 \ks{A-t} & Change panel view (full/brief/long).\\
 \ks{A-.} & Toggle “Show hidden files”.\\
 \end{keytable}
 
-\sect{Panels menu (F9 $begin:math:text$\\rightarrow$end:math:text$ Left/Right)}\par
+\sect{Panels menu — via F9 then Left/Right}\par
 \begin{keytable}
 \ks{(menu)} & Listing mode: Full / Brief / Long / User-defined.\\
 \ks{(menu)} & Info, Quick view, Tree, Tree view.\\
@@ -242,17 +243,17 @@ as if they were local directories.}\par
 \ks{(menu)} & Rescan/reread directory; Panelize (fill from command output).\\
 \end{keytable}
 
-\columnbreak
+\columnbreak{}
 
-\sect{Menus at a glance (F9)}\par
+\sect{Menus at a glance — F9}\par
 \begin{keytable}
 \ks{Left/Right} & Listing mode, sort, filter/select, quick view/info, tree, panelize, hotlist.\\
 \ks{File} & View/edit/copy/move/mkdir/delete, link tools, quit.\\
-\ks{Command} & Find file, quick cd, hotlist, compare dirs, external panelize, jobs.\\
+\ks{Command} & Find file, quick cd, hotlist, compare directories, external panelize, jobs.\\
 \ks{Options} & Configuration, appearance/layout, key learning, confirmations (build dependent).\\
 \end{keytable}
 
-\sect{File/directory operations (gist)}\par
+\sect{File and directory operations — gist}\par
 \begin{keytable}
 \ks{C-x d} & Compare directories.\\
 \ks{C-x c} & Chmod dialog.\\
@@ -260,24 +261,24 @@ as if they were local directories.}\par
 \ks{C-x C-s} & Edit symlink.\\
 \ks{C-x s} & Create symlink dialog.\\
 \ks{C-x l} & Create hard link dialog.\\
-\ks{C-x v} & Relative symlink tool on selected/tagged.\\
+\ks{C-x v} & Relative symlink tool on selected or tagged.\\
 \ks{C-x a} & List active VFS directories.\\
 \end{keytable}
 
-\sect{Command prompt (gist)}\par
+\sect{Command prompt — gist}\par
 \begin{keytable}
 \ks{C-o} & Drop to the console (toggle panels).\\
 \ks{A-Enter} & Put highlighted file name on command line.\\
-\ks{C-x t} & Put selected/tagged item names on command line.\\
+\ks{C-x t} & Put selected or tagged item names on command line.\\
 \ks{C-Shift-Enter} & Put full path of highlighted file on command line.\\
-\ks{A-a} / \ks{C-x p} & Put full path of panel directory on command line.\\
+\ks{A-a}/\ks{C-x p} & Put full path of panel directory on command line.\\
 \ks{A-h} & Show command history.\\
-\ks{A-n} / \ks{A-p} & Move up/down through command history.\\
-\ks{C-x !} & External panelize (fill panel with command output).\\
+\ks{A-n}/\ks{A-p} & Move up or down through command history.\\
+\ks{C-x \!} & External panelize (fill panel with command output).\\
 \ks{C-x j} & Show background jobs.\\
 \end{keytable}
 
-\sect{Quit variants (gist)}\par
+\sect{Quit variants — gist}\par
 \begin{keytable}
 \ks{F10} & Quit (normal).\\
 \ks{Shift-F10} & Quiet exit without confirmation.\\
@@ -288,13 +289,13 @@ as if they were local directories.}\par
 \newpage
 
 % ===================== PAGE 3 =====================
-{\Large\textsf{\textbf{Viewer/editor, panelize recipes, user menu/macros, keymaps}}}\par
+{\Large\textsf{\textbf{Viewer/editor, panelize recipes, user menu macros, keymaps}}}\par
 \small
-\sectionrule
+\sectionrule{}
 
 \begin{multicols}{2}
 
-\sect{File view (gist)}\par
+\sect{File view — gist}\par
 \begin{keytable}
 \ks{C-f} & View the next file.\\
 \ks{C-b} & View the previous file.\\
@@ -320,21 +321,21 @@ as if they were local directories.}\par
 
 \sect{Panelize: “virtual panels” from commands}\par
 \begin{keytable}
-\ks{C-x !} & External panelize (fill panel with command output).\\
+\ks{C-x \!} & External panelize (fill panel with command output).\\
 \ks{Example} & \key{git ls-files} (repo file list).\\
 \ks{Example} & \key{rg -l PATTERN} (files matching a pattern).\\
-\ks{Example} & \key{find . -type f -size +100M -print} (large files).\\
-\ks{Example} & \key{ls -1 | ...} (pipelines that produce 1 file per line).\\
+\ks{Example} & \key{find \. -type f -size +100M -print} (large files).\\
+\ks{Example} & \key{ls -1 | \ldots{}} (pipelines that output one file per line).\\
 \end{keytable}
 
-\sect{Background jobs (gist)}\par
+\sect{Background jobs — gist}\par
 \begin{keytable}
-\ks{C-x j} & Jobs list; inspect/cancel background operations.\\
+\ks{C-x j} & Jobs list; inspect or cancel background operations.\\
 \end{keytable}
 
-\columnbreak
+\columnbreak{}
 
-\sect{User menu “@” commands (gist)}\par
+\sect{User menu “@” commands — gist}\par
 \begin{keytable}
 \ks{F2-@} & Run a command on the currently highlighted item.\\
 \ks{Example} & \ks{F2-@ unzip} — unzip selected file.\\
@@ -344,25 +345,25 @@ as if they were local directories.}\par
 \ks{File} & User menu file (common): \pathtt{~/.config/mc/menu}.\\
 \end{keytable}
 
-\sect{User menu macros (mc(1), selected)}\par
+\sect{User menu macros — \mbox{mc\(1\)}}\par
 \begin{keytable}
 \ks{\%f}, \ks{\%p} & Current file (name/path).\\
-\ks{\%d}, \ks{\%D} & Current dir / other panel dir.\\
+\ks{\%d}, \ks{\%D} & Current directory / other panel directory.\\
 \ks{\%t}, \ks{\%T} & Tagged files (this/other panel).\\
 \ks{\%v}, \ks{\%V} & Tagged files with full paths.\\
 \ks{\%s}, \ks{\%S} & Selected files (tagged if any else current).\\
 \ks{\%cd} & Change directory (useful for VFS entrypoints).\\
-\ks{\%view[args]} & Internal viewer (ascii/hex/nroff/...).\\
-\textbf{\texttt{\pct\lbracechar prompt\rbracechar}} & Prompt user for substitution text.\\
-\textbf{\texttt{\pct var\lbracechar ENV:default\rbracechar}} & Env var substitution with default.\\
+\ks{\%view[args]} & Internal viewer (ascii/hex/nroff/\ldots{}).\\
+\textbf{\texttt{\pct{}\lbracechar{} prompt\rbracechar{}}} & Prompt user for substitution text.\\
+\textbf{\texttt{\pct{} var\lbracechar{} ENV:default\rbracechar{}}} & Env var substitution with default.\\
 \end{keytable}
 
-\sect{Keymaps / learn keys}\par
+\sect{Keymaps and Learn keys — \mbox{mc\(1\)}}\par
 \begin{keytable}
-\ks{Learn keys} & Writes terminal sequences into \pathtt{~/.config/mc/ini} under \key{[terminal:TERM]}.\\
+\ks{Learn keys} & Stores terminal sequences in \pathtt{~/.config/mc/ini} under \key{[terminal:TERM]}.\\
 \ks{-K}/\ks{--keymap} & Load a specific keymap file.\\
-\ks{MC\_KEYMAP} & Env var that selects a keymap.\\
-\ks{~/.config/mc/mc.keymap} & User keymap file location (common).\\
+\ks{MC\_KEYMAP} & Environment variable that selects a keymap.\\
+\ks{\pathtt{~/.config/mc/mc.keymap}} & Common user keymap location.\\
 \end{keytable}
 
 \end{multicols}
@@ -372,67 +373,67 @@ as if they were local directories.}\par
 % ===================== PAGE 4 =====================
 {\Large\textsf{\textbf{VFS, configuration paths, subshell, troubleshooting, references}}}\par
 \small
-\sectionrule
+\sectionrule{}
 
 \begin{multicols}{2}
 
-\sect{VFS: browse “special paths” (mc(1))}\par
+\sect{VFS:\@ browse “special paths” — \mbox{mc\(1\)}}\par{}
 \begin{keytable}
-\ks{Concept} & VFS lets you \emph{cd into} archives/remotes like directories.\\
-\ks{C-x a} & List active VFS directories (gist).\\
-\ks{Tip} & VFS can stack (e.g., archive stored on an \key{sftp://} path).\\
+\ks{Concept} & VFS lets you \emph{cd into} archives and remotes like directories.\\
+\ks{C-x a} & List active VFS directories — gist.\\
+\ks{Tip} & VFS can stack (for example, an archive stored on an \key{sftp://} path).\\
 \end{keytable}
 
-\sect{Remote VFS (mc(1))}\par
+\sect{Remote VFS — \mbox{mc\(1\)}}\par{}
 \begin{keytable}
-\ks{sh://}   & \codewrap{sh://[user@]machine[:port]/[remote-dir]}\\
-\ks{sftp://} & \codewrap{sftp://[user@]machine[:port]/[remote-dir]}\\
-\ks{Example} & \codewrap{sh://joe@somehost:2222/private}\\
-\ks{Example} & \codewrap{sftp://joe@somehost:2222/private}\\
+\ks{sh://} & \codepath{sh://[user@]machine[:port]/[remote-dir]}\\
+\ks{sftp://} & \codepath{sftp://[user@]machine[:port]/[remote-dir]}\\
+\ks{Example} & \codepath{sh://joe@somehost:2222/private}\\
+\ks{Example} & \codepath{sftp://joe@somehost:2222/private}\\
 \end{keytable}
 
-\sect{Archives / EXTfs (mc(1))}\par
+\sect{Archives and EXTfs — \mbox{mc\(1\)}}\par{}
 \begin{keytable}
-\ks{Example} & \codewrap{cd documents.zip/uzip://} (mc(1) example).\\
+\ks{Example} & \codewrap{cd documents.zip/uzip://} (man page example).\\
 \ks{Pattern} & \codewrap{cd file.tar.gz/utar://} (extfs name varies).\\
 \ks{Standalone} & \codewrap{cd fsname://} (enter an extfs “filesystem”).\\
 \end{keytable}
 
-\sect{Undelete (optional Linux ext2)}\par
+\sect{Undelete (optional ext2) — \mbox{mc\(1\)}}\par{}
 \begin{keytable}
-\ks{undel://} & \codewrap{undel://DEVICEPART} (e.g., \codewrap{undel://sda2}) if built with support.\\
+\ks{undel://} & \codewrap{undel://DEVICEPART} (for example, \codewrap{undel://sda2}) if built with support.\\
 \end{keytable}
 
-\columnbreak
+\columnbreak{}
 
-\sect{Configuration “what lives where” (mc(1))}\par
+\sect{Configuration paths — \mbox{mc\(1\)}}\par{}
 \begin{keytable}
 \ks{Main config} & \pathtt{~/.config/mc/ini}\\
 \ks{Panels} & \pathtt{~/.config/mc/panels.ini}\\
 \ks{Extensions} & \pathtt{~/.config/mc/mc.ext.ini}\\
 \ks{User menu} & \pathtt{~/.config/mc/menu}\\
 \ks{Keymap} & \pathtt{~/.config/mc/mc.keymap}\\
-\ks{Highlighting} & \pathtt{~/.config/mc/filehighlight.ini} (if supported)\\
+\ks{Highlighting} & \pathtt{~/.config/mc/filehighlight.ini} (if supported).\\
 \end{keytable}
 
-\sect{Subshell notes (mc(1))}\par
+\sect{Subshell notes — \mbox{mc\(1\)}}\par{}
 \begin{keytable}
 \ks{-u / -U} & Disable / force subshell.\\
-\ks{Concept} & Subshell shares your shell env/aliases while mc runs.\\
-\ks{bashrc} & Commonly \pathtt{~/.local/share/mc/bashrc} (varies by install).\\
+\ks{Concept} & Subshell shares your shell environment and aliases while mc runs.\\
+\ks{bashrc} & Often \pathtt{~/.local/share/mc/bashrc} (varies by install).\\
 \end{keytable}
 
 \sect{Troubleshooting quick hits}\par
 \begin{keytable}
-\ks{F10 stolen} & Quit via menu (\ks{F9} $begin:math:text$\\rightarrow$end:math:text$ Quit) or remap terminal key.\\
+\ks{F10 stolen} & Quit via menu (\ks{F9} $begin:math:text$\\rightarrow$end:math:text$ Quit) or remap the terminal key.\\
 \ks{Alt combos} & Use \ks{Esc} then key (Meta emulation).\\
-\ks{tmux/screen} & Try \ks{mc -g}; re-run “Learn keys”.\\
+\ks{tmux/screen} & Try \ks{mc -g}; then re-run Learn keys.\\
 \ks{Display odd} & Try \ks{mc -a} (ASCII) or adjust terminal settings.\\
 \end{keytable}
 
 \sect{References (URLs)}\par
 \begin{keytable}
-\ks{mc(1)} & \tinyurl{https://source.midnight-commander.org/man/mc.html}\\
+\ks{\mbox{mc\(1\)}} & \tinyurl{https://source.midnight-commander.org/man/mc.html}\\
 \ks{gist} & \tinyurl{https://gist.github.com/samiraguiar/9cd4264445545cfd459d}\\
 \ks{site} & \tinyurl{https://midnight-commander.org/}\\
 \end{keytable}
