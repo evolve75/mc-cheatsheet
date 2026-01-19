@@ -223,13 +223,13 @@ After printing:
 
 This cheatsheet is compiled from primary and authoritative sources:
 
-- Midnight Commander manual page
+- Midnight Commander manual page:
   <https://source.midnight-commander.org/man/mc.html>
 
-- Official Midnight Commander website
+- Official Midnight Commander website:
   <https://midnight-commander.org/>
 
-- Community cheatsheet by Samir Aguiar
+- Community cheatsheet by [Samir Aguiar](https://gist.github.com/samiraguiar/9cd4264445545cfd459d):
   <https://gist.github.com/samiraguiar/9cd4264445545cfd459d>
 
 Content has been curated, cross-checked, reorganized, and expanded for
