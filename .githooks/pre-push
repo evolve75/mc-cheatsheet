@@ -1,0 +1,33 @@
+#!/bin/sh
+set -eu
+
+# Only run if LaTeX-related files changed in commits being pushed
+# (works for both macOS and Linux)
+changed="$(git diff --name-only @{u}..HEAD 2>/dev/null || true)"
+echo "$changed" | \
+    grep -Eq '(^mc-cheatsheet\.tex$|^Makefile$|^\.latexmkrc$|^\.github/workflows/)' \
+    || exit 0
+
+# Require tools (fail early with a clear message)
+need() {
+    command -v "$1" >/dev/null 2>&1 \
+        || { echo "[hook] Missing: $1"; exit 1; };
+}
+
+need make
+need latexmk
+need xelatex
+need pdfbook2
+
+echo "[hook] Building PDF + booklet (make booklet)…"
+make distclean
+make booklet
+
+test -f mc-cheatsheet.pdf
+test -f mc-cheatsheet-booklet.pdf
+
+echo "[hook] OK: mc-cheatsheet.pdf and mc-cheatsheet-booklet.pdf"
+
+# Local Variables:
+# mode: sh
+# End:
