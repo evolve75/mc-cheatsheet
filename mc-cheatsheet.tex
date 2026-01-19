@@ -63,20 +63,19 @@
 
 % ---------- Layout ----------
 \usepackage{multicol}
-\setlength{\columnsep}{0.24in}
-% Slightly more breathing room between the two columns.
+\setlength{\columnsep}{0.22in}
 \raggedcolumns{}
 
 % ---------- Tables ----------
 \usepackage{booktabs}
 \usepackage{array}
 \usepackage{xcolor}
-
 % ---------- Color palette (enhanced contrast, still print-safe) ----------
 \definecolor{MCBlue}{HTML}{0B3C5D}   % deeper navy-blue (headings, rules)
 \definecolor{MCGray}{HTML}{555555}   % darker gray (headers/footers)
 \definecolor{MCKey}{HTML}{002A4E}    % strong blue for keybindings
 \definecolor{MCCode}{HTML}{1A1A1A}   % near-black for code
+\usepackage{needspace}
 
 % ---------- Lists ----------
 \usepackage{enumitem}
@@ -101,12 +100,15 @@
 \fancyhf{}
 \renewcommand{\headrulewidth}{0.3pt}
 \renewcommand{\footrulewidth}{0.3pt}
-% Two-sided: keep the title on the outer edge, label on the inner edge.
-\fancyhead[LE,RO]{\textsf{\color{MCGray}Midnight Commander (mc)}}
-\fancyhead[LO,RE]{\textsf{\color{MCGray}Cheatsheet}}
-% Footer: apply the same two-sided logic (page number on the outer edge).
-\fancyfoot[LE,RO]{\textsf{\color{MCGray}Page \thepage\ of 4}}
+% Two-sided booklet: inner = near fold, outer = thumb edge
 
+% Header: title on inner edge, "Cheatsheet" on outer edge
+\fancyhead[LE,RO]{\textsf{\color{MCGray}Midnight Commander}}
+\fancyhead[LO,RE]{\textsf{\color{MCGray}Cheatsheet}}
+
+% Footer: "mc" on inner edge, page number on outer edge
+\fancyfoot[LO,RE]{\textsf{\color{MCGray}mc}}
+\fancyfoot[LE,RO]{\textsf{\color{MCGray}Page \thepage\ of 4}}
 % ---------- House style ----------
 \setlength{\parindent}{0pt}
 \setlength{\parskip}{0.24em}
@@ -115,14 +117,10 @@
 
 % ---------- Macros ----------
 \newcommand{\app}{\textsf{Midnight Commander}}
-\newcommand{\key}[1]{\texttt{\color{MCCode}#1}}
-\newcommand{\ks}[1]{\textbf{\texttt{\color{MCKey}#1}}}
-\newcommand{\sect}[1]{\textsf{\color{MCBlue}\textbf{#1}}}
-\newcommand{\sectionrule}{%
-  \vspace{0.14em}%
-  {\color{MCBlue}\hrule}%
-  \vspace{0.30em}%
-}
+\newcommand{\key}[1]{\texttt{#1}}
+\newcommand{\ks}[1]{\textbf{\color{MCKey}\texttt{#1}}}
+\newcommand{\sect}[1]{\Needspace{7\baselineskip}\textsf{\color{MCBlue}\bfseries #1}}
+\newcommand{\sectionrule}{\vspace{0.14em}\hrule\vspace{0.30em}}
 \newcommand{\tinyurl}[1]{\texttt{\small\url{#1}}}
 \newcommand{\pathtt}[1]{\texttt{\path{#1}}}
 
@@ -133,9 +131,9 @@
 
 % Wrap-friendly code for long protocol-ish strings
 % Commands/snippets: preserve literal spaces
-\newcommand{\codewrap}[1]{{\ttfamily\small\color{MCCode}#1}\space}
+\newcommand{\codewrap}[1]{{\ttfamily\small #1}\space}
 % Path/protocol strings: allow breaks at / : . _ - etc., and preserve trailing space
-\newcommand{\codepath}[1]{{\ttfamily\small\color{MCCode}\path{#1}}\space}
+\newcommand{\codepath}[1]{{\ttfamily\small\path{#1}}\space}
 
 % ---------- Key table environment ----------
 \newcommand{\keycolw}{0.24\linewidth}
@@ -146,7 +144,7 @@
   \vspace{0.22em}%
   \begin{tabular}{@{} >{\raggedright\arraybackslash}p{\keycolw} >{\raggedright\arraybackslash}p{\actcolw} @{}}
   \toprule
-  \textsf{\color{MCGray}Key} & \textsf{\color{MCGray}Action}\\
+  \textsf{Key} & \textsf{Action}\\
   \midrule
 }
 {%
@@ -182,7 +180,7 @@ as if they were local directories.}\par
 \begin{itemize}
   \item \ks{C-x} = Ctrl+\key{x}. \quad \ks{A-x} = Alt+\key{x}.
   \item No Alt/Meta? Press \ks{Esc}, release, then type the character.
-  \item Many terminals map \ks{Esc}+\key{1\ldots{}9,0} $begin:math:text$\\rightarrow\{\}$end:math:text$ \ks{F1\ldots{}F10}.
+  \item Many terminals map \ks{Esc}+\key{1\ldots{}9,0} \(\rightarrow{}\) \ks{F1\ldots{}F10}.
   \item \ks{Esc Esc} quickly dismisses menus and popups — gist.
 \end{itemize}
 
@@ -204,6 +202,8 @@ as if they were local directories.}\par
   \item Directory print: \ks{mc -P FILE} (for \key{mc.sh} “cd after exit” wrapper).
   \item Info: \ks{mc -V} (version) \; \ks{mc -h} (help).
 \end{itemize}
+
+\columnbreak{}
 
 \sect{Core function keys — File menu}\par
 \begin{keytable}
@@ -290,7 +290,7 @@ as if they were local directories.}\par
 \ks{(menu)} & Rescan/reread directory; Panelize (fill from command output).\\
 \end{keytable}
 
-% (balanced automatically by multicols)
+\columnbreak{}
 
 \sect{Menus at a glance — F9}\par
 \begin{keytable}
@@ -309,7 +309,7 @@ as if they were local directories.}\par
 \ks{C-x s} & Create symlink dialog.\\
 \ks{C-x l} & Create hard link dialog.\\
 \ks{C-x v} & Relative symlink tool on selected or tagged.\\
-\ks{C-x a} & List active VFS directories — gist.\\
+\ks{C-x a} & List active VFS directories.\\
 \end{keytable}
 
 \sect{Command prompt — gist}\par
@@ -380,7 +380,7 @@ as if they were local directories.}\par
 \ks{C-x j} & Jobs list; inspect or cancel background operations.\\
 \end{keytable}
 
-% (balanced automatically by multicols)
+\columnbreak{}
 
 \sect{User menu “@” commands — gist}\par
 \begin{keytable}
@@ -451,7 +451,7 @@ as if they were local directories.}\par
 \ks{undel://} & \codewrap{undel://DEVICEPART} (for example, \codewrap{undel://sda2}) if built with support.\\
 \end{keytable}
 
-% (balanced automatically by multicols)
+\columnbreak{}
 
 \sect{Configuration paths — \manref{mc}{1}}\par{}
 \begin{keytable}
@@ -472,7 +472,7 @@ as if they were local directories.}\par
 
 \sect{Troubleshooting quick hits}\par
 \begin{keytable}
-\ks{F10 stolen} & Quit via menu (\ks{F9} $begin:math:text$\\rightarrow\{\}$end:math:text$ Quit) or remap the terminal key.\\
+\ks{F10 stolen} & Quit via menu (\ks{F9} $begin:math:text$\\rightarrow$end:math:text$ Quit) or remap the terminal key.\\
 \ks{Alt combos} & Use \ks{Esc} then key (Meta emulation).\\
 \ks{tmux/screen} & Try \ks{mc -g}; then re-run Learn keys.\\
 \ks{Display odd} & Try \ks{mc -a} (ASCII) or adjust terminal settings.\\
